@@ -1,12 +1,15 @@
 /*
 
 Author : rahul_mishra01 (rahul.mishra2003@gmail.com)
-Concept : implementation ,maths
-problem Name : Johnny and the Beanstalk 
+Concept : Subset Sum
+problem Name : Paying Up
 
 
 
 */
+
+
+
 #include<bits/stdc++.h>
 #define INF  INT_MAX  //infinity
 #define NINF  INT_MIN //Negetive_infinity
@@ -107,6 +110,36 @@ template <class T> inline void write(T x)
 
 }
 
+bool possibility(long int m,int n,long int *notes)
+{
+   FOR(i,1,(1<<n)-1,1)
+   {
+      long int total = 0;
+      long int temp = i;
+      int index = 1;
+      while(temp > 0)
+      {
+
+          if(temp&1)
+            total+=notes[index];
+          temp=temp>>1;
+          index+=1;
+
+
+      }
+
+      if (total == m)
+      {
+        //DBG(i)
+    //  DBG(total)
+        return true;
+      }
+   }
+
+   return false;
+
+
+}
 
 int main()
 {
@@ -116,55 +149,22 @@ int main()
     #endif
     int t;
     cin>>t;
+
     FOR(i,0,t-1,1)
     {
-       long long int levels;
-       cin>>levels;
-       long long int tree[levels];
-       FOR(j,0,levels-1,1)
-       {
-           cin>>tree[j];
+     long int n,m;
+     cin>>n>>m;
 
-       }
-       long long int stems = 1;
-       bool valid = false;
-       FOR(j,0,levels-1,1)
-       {
-            //DBG(stems)
-            //DBG(tree[j])
+     long int notes[n+1];
+     notes[0]=0;
+     FOR(j,1,n,1)
+     cin>>notes[j];
 
-            if (tree[j] < stems)
-            {
-                stems = (stems - tree[j])*2;
-
-            }
-
-            else if (tree[j]==stems and j == levels-1)
-            {
-               valid = true;
-               break;
-            }
-            else
-            {
-                valid = false;
-               break;
-            }
-          // DBG(valid)
-       }
-       if (valid)
-       {
-
-       cout<<"Yes\n";
-
-       }
-       else
-       {
-       cout<<"No\n";
-       }
-
-
-
-
+     bool ans = possibility(m,n,notes);
+     if(ans)
+     cout<<"Yes\n";
+     else
+     cout<<"No\n";
 
     }
     return 0;
